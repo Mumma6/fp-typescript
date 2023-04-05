@@ -46,3 +46,12 @@ const squareArray = (arr: number[]) => arr.map((x) => x * x)
 
 const numberArrayMagic = pipeline(add10toArray, doubbleArray, squareArray)(numbersArray)
 console.log(numberArrayMagic)
+
+const pipe =
+  <T>(...fns: Array<(arg: T) => T>) =>
+  (value: T) =>
+    fns.reduce((acc, fn) => fn(acc), value)
+
+const numberArrayMagic2 = pipe(add10toArray, doubbleArray, doubbleArray, doubbleArray)(numbersArray)
+
+console.log(numberArrayMagic2)
