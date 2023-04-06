@@ -40,18 +40,10 @@ const numberMagicToString = pipeline(add10, dubble, numberToString)(15)
 
 const numbersArray = [1, 2, 3, 4, 5]
 
-const add10toArray = (arr: number[]) => arr.map((x) => x + 10)
-const doubbleArray = (arr: number[]) => arr.map((x) => x * 2)
-const squareArray = (arr: number[]) => arr.map((x) => x * x)
+const add10toArray = (arr: number[]) => arr.map(add10)
+const doubbleArray = (arr: number[]) => arr.map(dubble)
+const squareArray = (arr: number[]) => arr.map(square)
+const numsToString = (arr: number[]) => arr.map(numberToString)
 
-const numberArrayMagic = pipeline(add10toArray, doubbleArray, squareArray)(numbersArray)
+const numberArrayMagic = pipeline(add10toArray, doubbleArray, squareArray, numsToString)(numbersArray)
 console.log(numberArrayMagic)
-
-const pipe =
-  <T>(...fns: Array<(arg: T) => T>) =>
-  (value: T) =>
-    fns.reduce((acc, fn) => fn(acc), value)
-
-const numberArrayMagic2 = pipe(add10toArray, doubbleArray, doubbleArray, doubbleArray)(numbersArray)
-
-console.log(numberArrayMagic2)
