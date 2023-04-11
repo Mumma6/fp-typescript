@@ -20,6 +20,15 @@ const right = <A, E = never>(data: A): Either<E, A> => ({
   right: data,
 })
 
+export const eMap = <E, A, B>(either: Either<E, A>, f: (a: A) => B): Either<E, B> =>
+  either._tag === "Right" ? right(f(either.right)) : either
+
+export const eChain = <E, A, B>(either: Either<E, A>, f: (a: A) => Either<E, B>): Either<E, B> =>
+  either._tag === "Right" ? f(either.right) : either
+
+export const eFold = <E, A, B>(either: Either<E, A>, leftFn: (e: E) => B, rightFn: (a: A) => B): B =>
+  either._tag === "Right" ? rightFn(either.right) : leftFn(either.left)
+
 const isLeft = <E, A>(x: Either<E, A>): x is Left<E> => x._tag === "Left"
 
 const divideTwoIfEven = (n: number): Either<string, number> => {
